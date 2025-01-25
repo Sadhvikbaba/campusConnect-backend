@@ -10,6 +10,8 @@ const emailsByResponse = {
     "Issues with electrical maintenance" : "likhithcvsrl@gmail.com",
     "Issues with plumbing or water" : "balueswar109@gmail.com",
     "Issues with transportation" : "sniperafroz@gmail.com",
+    "it is a general talk" : null ,
+    "Irrelevant or unclear input" : null
 }
 
 export const emailFinder = asyncHandler( async (req , res) => {
@@ -21,6 +23,11 @@ export const emailFinder = asyncHandler( async (req , res) => {
     if(!response.data){ res.status(500).json({statusCode : 500 ,message : "internal server error"});return ;}
 
     const reason = response.data?.predicted_department;
+
+    if(!emailsByResponse[reason]){res.status(404).json({statusCode : 404 , message : "we can find solution for your problem"});return ;}
+
+    console.log(reason);
+    
 
     if(!reason){res.status(404).json({statusCode : 404 , message : "we can find solution for your problem"});return ;}
 
